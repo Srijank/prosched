@@ -37,11 +37,11 @@ app.use(express.static(path.join(__dirname, '../frontend/public')));
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 const db = new pg.Client({
-   user:"postgres",
-   host:"localhost",
-   database:"world",
-   password:"191023",
-   port:process.env.db||5432
+   user:process.env.DBUSER || "postgres",
+   host:process.env.DBHOST || "localhost",
+   database:process.env.DBDATABASE|| "world",
+   password:process.env.DBPASSWORD|| "191023",
+   port:process.env.DBPORT||5432
 });
 db.connect();
 //To get all task 
