@@ -42,6 +42,7 @@ body{
     display: grid;
     grid-template-columns:   1fr 1fr 1fr;
     background-color: white; 
+    min-height: fit-content;
    
     
 }
@@ -332,7 +333,7 @@ input[type="checkbox"] {
     height:1.8rem; 
   
 }
-@media (min-width:300px)and (max-width:650px){
+@media (min-width:100px)and (max-width:650px){
     .weekly_task{
         display: grid;
         grid-template-columns: 1fr  ;
@@ -360,6 +361,44 @@ input[type="checkbox"] {
         position:relative;
         left:90%;
         top:-25px;
+    }
+    .features{
+        margin: 0%;
+        display: grid;
+        grid-template-columns: 1fr;
+        min-height: fit-content;
+        
+        
+        
+    }
+    .featuresdiv{
+        margin-left:0%;
+    }
+    
+    .footer{
+        margin-top:40px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        min-height: 10vh;
+        background-color: #102C57; 
+        
+    }
+    .footer-item{
+       
+        display: block;
+        color:white;
+        width:45%;
+        font-size: 14px;
+        margin-left: 45%;
+    }
+    .linkedin{
+        width:5%;
+        margin-left:50%;
+    }
+    .featurecard{
+      
+        margin-bottom:10%;
+        
     }
  
 }
