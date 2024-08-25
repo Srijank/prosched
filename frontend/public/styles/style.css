@@ -371,7 +371,8 @@ input[type="checkbox"] {
     }
     .taskcount{
         position:absolute;
-        left:15%;
+        top:50%;
+        left:8%;
         color:white
      } 
      .tooltips {
