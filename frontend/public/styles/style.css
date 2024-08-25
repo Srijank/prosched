@@ -333,6 +333,15 @@ input[type="checkbox"] {
     height:1.8rem; 
   
 }
+.togglecontainer{
+    margin-top: -20px;
+    position: relative;
+    left:40%;
+
+}
+.toggletext{
+    display: inline-flex;
+}
 @media (min-width:100px)and (max-width:480px){
     .weekly_task{
         display: grid;
@@ -340,13 +349,17 @@ input[type="checkbox"] {
         gap:10px;
         
     }
+    .togglecontainer{
+        position: relative;
+        left:25%;
+    }
     .weekly_title{
         position:absolute;
         left:18%;
         
     }
    #weekly_schedule{
-        margin-left:5px;
+        margin-left:8px;
     }
     .taskcount{
         position:absolute;

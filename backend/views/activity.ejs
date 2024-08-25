@@ -26,7 +26,59 @@
        
    <div id="weekly_schedule" class="toblurcontent" >
     <input type="date" id="calendertoshow" >
-    <h1 class="weekly_title" >Weekly Schedule</h1>
+    <div class="togglecontainer" >
+        <div class="btn-group" role="group" aria-label="Basic example" >
+            
+            <button type="button" class="btn  " <%
+           if (section==='today'){ %>
+            style="background-color:#102C57;" >
+            <a href="/dashboard/today" style="text-decoration: none;color: white;">Today</a>
+            <% }
+            else {%>
+                style="background-color:white;" >
+                <a href="/dashboard/today" style="text-decoration: none;color: black;">Today</a>
+                <% } %>
+           
+              
+            </button>
+            <button type="button" class="btn "  
+            <%
+           if (section==='upcoming'){ %>
+            style="background-color:#102C57;" >
+            <a href="/dashboard/upcoming" style="text-decoration: none;color: white;">Upcoming</a>
+            <% }
+            else {%>
+                style="background-color:white;color:black" >
+                <a href="/dashboard/upcoming" style="text-decoration: none;color: black;">Upcoming</a>
+                <% } %>
+           </button>
+
+            <button type="button" class="btn " <%
+           if (section==='finished'){ %>
+            style="background-color:#102C57;" >
+            <a href="/dashboard/finished" style="text-decoration: none;color: white;">Finished</a>
+            <% }
+            else {%>
+                style="background-color:white;" >
+                <a href="/dashboard/finished" style="text-decoration: none;color: black;">Finished</a>
+                <% } %>
+           
+              
+            </button>
+            <button type="button" class="btn " <%
+           if (section==='due'){ %>
+            style="background-color:#102C57;" >
+            <a href="/dashboard/due" style="text-decoration: none;color: white;">Due</a>
+            <% }
+            else {%>
+                style="background-color:white;" >
+                <a href="/dashboard/due" style="text-decoration: none;color: black;">Due</a>
+                <% } %>
+           
+              
+            </button>
+          </div>
+    </div>
     <div class="add_task">
         <img src="/images/plus.png" alt="icon" class="add_icon"/>
         <img src="/images/download.png" alt="icon" class="delete-icon"/>

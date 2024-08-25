@@ -68,7 +68,13 @@ async function getAllTaskList(req,res){
     }
 }
 
-
+async function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+ 
 app.get("/",(req,res)=>{
     res.render("index");
 });
@@ -109,22 +115,26 @@ app.post('/delete-task', async (req, res) => {
     res.redirect("/login");
   }
 });
-app.get("/dashboard", async (req,res) =>{
+app.get("/dashboard/today", async (req,res) =>{
     if (req.isAuthenticated()) {
-      const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",[req.user.id,req.user.email,0,null,null,null,null,null,null,0,null,null]);
+      const currentDate = await formatDate(new Date());
+      
+      const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",[req.user.id,req.user.email,0,null,null,null,null,currentDate,currentDate,null,0,null,null]);
       const resultSet =  task_detail;
    
       if(resultSet.rowCount){
         res.render("activity",{
            tasksList:resultSet.rows,
            count:1,
+           section:'today',
            userId:req.user.email
         });
        }
        else {
            res.render("activity",{
                count:0,
-               tasksList:'No task added , Add now',
+               tasksList:'No task for toady ):',
+               section:'today',
                userId:req.user.email
             }); 
        }
@@ -135,11 +145,111 @@ app.get("/dashboard", async (req,res) =>{
    
 });
 
+app.get("/dashboard/upcoming", async (req,res) =>{
+  if (req.isAuthenticated()) {
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate()+1);
+   const formattedcurrentdate =await formatDate(currentDate) ;
+    var upcomingDate = new Date();
+    upcomingDate.setDate(upcomingDate.getDate()+365);
+    const formattedupcomingdate =await formatDate(upcomingDate) ;
+    console.log(formattedupcomingdate);
+    console.log(formattedcurrentdate);
+    const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",[req.user.id,req.user.email,0,null,null,null,null,formattedcurrentdate,formattedupcomingdate,null,0,null,null]);
+    const resultSet =  task_detail;
+ 
+    if(resultSet.rowCount){
+      res.render("activity",{
+         tasksList:resultSet.rows,
+         count:1,
+         section:'upcoming',
+         userId:req.user.email
+      });
+     }
+     else {
+         res.render("activity",{
+             count:0,
+             tasksList:'No upcoming tasks,Add now',
+             section:'upcoming',
+             userId:req.user.email
+          }); 
+     }
+    } else {
+      res.redirect("/login");
+    }
+    
+ 
+});
+
+app.get("/dashboard/finished", async (req,res) =>{
+  if (req.isAuthenticated()) {
+    const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",[req.user.id,req.user.email,0,null,null,null,null,null,null,'Done',0,null,null]);
+    const resultSet =  task_detail;
+ 
+    if(resultSet.rowCount){
+      res.render("activity",{
+         tasksList:resultSet.rows,
+         count:1,
+         section:'finished',
+         userId:req.user.email
+      });
+     }
+     else {
+         res.render("activity",{
+             count:0,
+             tasksList:'No tasks finished );',
+             section:'upcoming',
+             userId:req.user.email
+          }); 
+     }
+    } else {
+      res.redirect("/login");
+    }
+    
+ 
+});
+
+app.get("/dashboard/due", async (req,res) =>{
+  if (req.isAuthenticated()) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    var formattedyesterday = await formatDate(yesterday);
+    const previousyear = new Date();
+    previousyear.setDate(yesterday.getDate() - 365);
+    var formattedyear= await formatDate(previousyear);
+    console.log(formattedyesterday);
+    const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",[req.user.id,req.user.email,0,null,null,null,null,formattedyear,formattedyesterday,null,0,null,null]);
+    const resultSet =  task_detail;
+ 
+    if(resultSet.rowCount){
+      res.render("activity",{
+         tasksList:resultSet.rows,
+         count:1,
+         section:'due',
+         userId:req.user.email
+      });
+     }
+     else {
+         res.render("activity",{
+             count:0,
+             tasksList:'No task added , Add now',
+             section:'due',
+             userId:req.user.email
+          }); 
+     }
+    } else {
+      res.redirect("/login");
+    }
+    
+ 
+});
+
 app.post("/weekTask",(req,res)=>{
     var result = req.body;
     const userId = req.user['id'];
+    console.log(req.body);
     var queryresult = db.query(" CALL upserttask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",[userId,0,result['activity'],result['description'],result['priority'],0, result['deadline'],result['status'],0,result['impact'],result['reward'],0]);
-    res.redirect('/dashboard');
+    res.redirect('/dashboard/today');
     
 });
 
@@ -147,7 +257,7 @@ app.post("/taskEdit",(req,res)=>{
     var result = req.body;
     const userId = req.user['id'];
     var queryresult = db.query(" CALL upserttask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",[userId,result['task_id'],result['activity'],result['description'],result['priority'],0,result['deadline'],result['status'],0,result['impact'],result['reward'],0]);
-    res.redirect('/dashboard');
+    res.redirect('/dashboard/today');
     
 });
 
@@ -177,7 +287,7 @@ app.post("/taskEdit",(req,res)=>{
             const user = result.rows[0];
             req.login(user, (err) => {
               console.log("success");
-              res.redirect("/dashboard");
+              res.redirect("/dashboard/today");
             });
           }
         });
@@ -188,7 +298,7 @@ app.post("/taskEdit",(req,res)=>{
   });
 
   app.post('/logins',passport.authenticate("local", {
-    successRedirect: "/dashboard",
+    successRedirect: "/dashboard/today",
     failureRedirect: "/login"
 }));
 

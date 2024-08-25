@@ -67,8 +67,8 @@ var dateInput = document.getElementsByClassName('deadline');
 //console.log(dateInput[1]);
 dateInput[0].setAttribute('min', minimumDate('min',null));
 dateInput[1].setAttribute('min', minimumDate('min',null));
-dateInput[0].setAttribute('max', minimumDate('max',null));
-dateInput[1].setAttribute('max', minimumDate('max',null));
+// dateInput[0].setAttribute('max', minimumDate('max',null));
+// dateInput[1].setAttribute('max', minimumDate('max',null));
 
 });
 
