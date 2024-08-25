@@ -29,7 +29,7 @@
     <div class="togglecontainer" >
         <div class="btn-group" role="group" aria-label="Basic example" >
             
-            <button type="button" class="btn  " <%
+            <button type="button" class="btn  sect" <%
            if (section==='today'){ %>
             style="background-color:#102C57;" >
             <a href="/dashboard/today" style="text-decoration: none;color: white;">Today</a>
@@ -41,7 +41,7 @@
            
               
             </button>
-            <button type="button" class="btn "  
+            <button type="button" class="btn sect"  
             <%
            if (section==='upcoming'){ %>
             style="background-color:#102C57;" >
@@ -53,7 +53,7 @@
                 <% } %>
            </button>
 
-            <button type="button" class="btn " <%
+            <button type="button" class="btn sect" <%
            if (section==='finished'){ %>
             style="background-color:#102C57;" >
             <a href="/dashboard/finished" style="text-decoration: none;color: white;">Finished</a>
@@ -65,7 +65,7 @@
            
               
             </button>
-            <button type="button" class="btn " <%
+            <button type="button" class="btn sect " <%
            if (section==='due'){ %>
             style="background-color:#102C57;" >
             <a href="/dashboard/due" style="text-decoration: none;color: white;">Due</a>
