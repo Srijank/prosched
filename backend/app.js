@@ -31,7 +31,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const __dirname= dirname(fileURLToPath(import.meta.url));
-console.log(__dirname);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
@@ -153,8 +152,6 @@ app.get("/dashboard/upcoming", async (req,res) =>{
     var upcomingDate = new Date();
     upcomingDate.setDate(upcomingDate.getDate()+365);
     const formattedupcomingdate =await formatDate(upcomingDate) ;
-    console.log(formattedupcomingdate);
-    console.log(formattedcurrentdate);
     const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",[req.user.id,req.user.email,0,null,null,null,null,formattedcurrentdate,formattedupcomingdate,null,0,null,null]);
     const resultSet =  task_detail;
  
@@ -185,7 +182,7 @@ app.get("/dashboard/finished", async (req,res) =>{
   if (req.isAuthenticated()) {
     const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",[req.user.id,req.user.email,0,null,null,null,null,null,null,'Done',0,null,null]);
     const resultSet =  task_detail;
- 
+   
     if(resultSet.rowCount){
       res.render("activity",{
          tasksList:resultSet.rows,
@@ -198,7 +195,7 @@ app.get("/dashboard/finished", async (req,res) =>{
          res.render("activity",{
              count:0,
              tasksList:'Finish your first task soon 🎯',
-             section:'upcoming',
+             section:'finished',
              userId:req.user.email
           }); 
      }
@@ -217,7 +214,6 @@ app.get("/dashboard/due", async (req,res) =>{
     const previousyear = new Date();
     previousyear.setDate(yesterday.getDate() - 365);
     var formattedyear= await formatDate(previousyear);
-    console.log(formattedyesterday);
     const task_detail=  await db.query("SELECT * FROM gettask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",[req.user.id,req.user.email,0,null,null,null,null,formattedyear,formattedyesterday,null,0,null,null]);
     const resultSet =  task_detail;
  
@@ -247,7 +243,6 @@ app.get("/dashboard/due", async (req,res) =>{
 app.post("/weekTask",(req,res)=>{
     var result = req.body;
     const userId = req.user['id'];
-    console.log(req.body);
     var queryresult = db.query(" CALL upserttask($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",[userId,0,result['activity'],result['description'],result['priority'],0, result['deadline'],result['status'],0,result['impact'],result['reward'],0]);
     res.redirect('/dashboard/today');
     
