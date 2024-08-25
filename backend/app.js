@@ -133,7 +133,7 @@ app.get("/dashboard/today", async (req,res) =>{
        else {
            res.render("activity",{
                count:0,
-               tasksList:'No task for toady ):',
+               tasksList:'Wow,You finished all tasks 🎉🥳',
                section:'today',
                userId:req.user.email
             }); 
@@ -169,7 +169,7 @@ app.get("/dashboard/upcoming", async (req,res) =>{
      else {
          res.render("activity",{
              count:0,
-             tasksList:'No upcoming tasks,Add now',
+             tasksList:'No upcoming tasks,Add now?🤔',
              section:'upcoming',
              userId:req.user.email
           }); 
@@ -197,7 +197,7 @@ app.get("/dashboard/finished", async (req,res) =>{
      else {
          res.render("activity",{
              count:0,
-             tasksList:'No tasks finished );',
+             tasksList:'Finish your first task soon 🎯',
              section:'upcoming',
              userId:req.user.email
           }); 
@@ -232,7 +232,7 @@ app.get("/dashboard/due", async (req,res) =>{
      else {
          res.render("activity",{
              count:0,
-             tasksList:'No task added , Add now',
+             tasksList:'Keep it up, No Dues 😃',
              section:'due',
              userId:req.user.email
           }); 

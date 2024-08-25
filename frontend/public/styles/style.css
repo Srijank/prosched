@@ -347,6 +347,7 @@ input[type="checkbox"] {
         display: grid;
         grid-template-columns: 1fr  ;
         gap:10px;
+        margin-left: 10px;
         
     }
     .togglecontainer{
@@ -370,7 +371,7 @@ input[type="checkbox"] {
     }
     .taskcount{
         position:absolute;
-        left:30%;
+        left:15%;
         color:white
      } 
      .tooltips {
