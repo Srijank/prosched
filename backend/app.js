@@ -232,7 +232,7 @@ app.get("/dashboard/due", async (req,res) =>{
      else {
          res.render("activity",{
              count:0,
-             tasksList:'Keep it up, No Dues 😃',
+             tasksList:'Keep it up, No Dues 🥳✨🔥',
              section:'due',
              userId:req.user.email
           }); 
